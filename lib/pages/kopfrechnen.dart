@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 class KopfMain extends StatelessWidget {
   const KopfMain({super.key});
@@ -14,28 +15,22 @@ class KopfMain extends StatelessWidget {
       ),
       body: GestureDetector(
         behavior: HitTestBehavior.opaque,
-        onTap: (){
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-                builder: (context) => const KopfInGame(),
-            )
-          );
-
+        onTap: () {
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => const KopfInGame(),
+          ));
         },
         child: DefaultTextStyle.merge(
-          style: const TextStyle(
-            fontSize: 30,
-          ),
-          child: const Center(
-            child: Text("Drücke auf den Bildschirm um zu Starten!"),
-          )
-        ),
+            style: const TextStyle(
+              fontSize: 30,
+            ),
+            child: const Center(
+              child: Text("Drücke auf den Bildschirm um zu Starten!"),
+            )),
       ),
     );
   }
 }
-
-
 
 class KopfInGame extends StatefulWidget {
   const KopfInGame({super.key});
@@ -44,46 +39,244 @@ class KopfInGame extends StatefulWidget {
 }
 
 class _KopfInGameState extends State<KopfInGame> {
-
+  //Timer
   int _counter = 60;
+  late Timer _timer;
 
-  void _startTimer(){
-    setState(() {
-      if (_counter >= 0) {
-        _counter--;
+
+
+  void startTimer() {
+    const oneSecond = Duration(seconds: 1);
+    _timer = Timer.periodic(oneSecond, (timer) {
+      if (_counter <= 0) {
+        timer.cancel();
       } else {
-        _counter = 0;
+        setState(() {
+          _counter--;
+        });
       }
     });
   }
 
+  @override
+  void dispose() {
+    _timer.cancel(); // Timer stoppen, wenn der State zerstört wird
+    super.dispose();
+  }
 
+  //Rechenaufgabe
+  String _currentTask = "";
+  int result = 0;
+  List<int> answers = [1,2,3,4,5,6];
+  var random = Random();
+  int score = 0;
+
+  void taskBuilder() {
+    int num1 = random.nextInt(500) + 1;
+    int num2 = random.nextInt(500) + 1;
+    _currentTask = '$num1 + $num2';
+    result = num1 + num2;
+  }
+
+  int randomNum(){
+    int randomNumber;
+    do {
+      randomNumber = 1 + random.nextInt(1000);
+    } while (randomNumber == result);
+    return randomNumber;
+  }
+
+  void randomAnswers(){
+    answers[0] = result;
+    for(int i = 1; i<6; i++){
+      answers[i] = randomNum();
+    }
+    answers.shuffle(Random());
+  }
+
+  void check(int clickResult){
+    if(clickResult == result){
+      score++;
+      taskBuilder();
+      randomAnswers();
+    } else {
+      _counter -= 5;
+    }
+  }
+
+  //Bei Start ausgeführt
+  @override
+  void initState() {
+    super.initState();
+    taskBuilder();
+    randomAnswers();
+    startTimer();
+  }
 
   @override
   Widget build(BuildContext context) {
-    Timer(const Duration(seconds: 1), _startTimer);
-    return Scaffold(
-      backgroundColor: Colors.deepPurple,
-      appBar: AppBar(
-        backgroundColor: const  Color.fromRGBO(1, 1, 1, 0.0),
-        elevation: 0.0,
-        automaticallyImplyLeading: false,
-      ),
-      body:  Column(
-        children: [
-          DefaultTextStyle.merge(style:
-            const TextStyle(
-                  fontSize: 35,
-              color: Colors.white,
+    return MaterialApp(
+      home: Scaffold(
+        backgroundColor: Colors.deepPurple,
+        appBar: AppBar(
+          backgroundColor: const Color.fromRGBO(1, 1, 1, 0.0),
+          elevation: 0.0,
+          automaticallyImplyLeading: false,
+        ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            DefaultTextStyle.merge(
+              style: const TextStyle(
+                fontSize: 35,
+                color: Colors.white,
+              ),
+              child: Center(child: Text('$_counter')),
             ),
-              child:
-              Center(
-                child: Text("$_counter")
-              )
-          ),
+            DefaultTextStyle.merge(
+              style: const TextStyle(
+                fontSize: 42,
+                color: Colors.white,
+              ),
+              child: Center(child: Text(_currentTask)),
+            ),
+            Column(
+              children: [
+                Padding(padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      DefaultTextStyle.merge(
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                         ),
+                        child: Center(child: Text('Score: $score')),
+                      ),
+                      DefaultTextStyle.merge(
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
+                        child: const Center(child: Text("Highscore:")),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                          child: SizedBox(
+                            height: 100,
+                            child: FractionallySizedBox(
+                              widthFactor: 0.95,
+                              child: ElevatedButton(
+                                onPressed: () {check(answers[0]);},
+                                child: Text('${answers[0]}'),
+                              ),
+                            ),
+                          )
+                      ),
+                      Expanded(
+                          child: SizedBox(
+                            height: 100,
+                            child: FractionallySizedBox(
+                              widthFactor: 0.95,
+                              child: ElevatedButton(
+                                onPressed: () {check(answers[1]);},
+                                child: Text('${answers[1]}'),
+                              ),
+                            ),
+                          )
+                      ),
+                      Expanded(
+                          child: SizedBox(
+                            height: 100,
+                            child: FractionallySizedBox(
+                              widthFactor: 0.95,
+                              child: ElevatedButton(
+                                onPressed: () {check(answers[2]);},
+                                child: Text('${answers[2]}'),
+                              ),
+                            ),
+                          )
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                          child: SizedBox(
+                            height: 100,
+                            child: FractionallySizedBox(
+                              widthFactor: 0.95,
+                              child: ElevatedButton(
+                                onPressed: () {check(answers[3]);},
+                                child: Text('${answers[3]}'),
+                              ),
+                            ),
+                          )
+                      ),
+                      Expanded(
+                          child: SizedBox(
+                            height: 100,
+                            child: FractionallySizedBox(
+                              widthFactor: 0.95,
+                              child: ElevatedButton(
+                                onPressed: () {check(answers[4]);},
+                                child: Text('${answers[4]}'),
+                              ),
+                            ),
+                          )
+                      ),
+                      Expanded(
+                          child: SizedBox(
+                            height: 100,
+                            child: FractionallySizedBox(
+                              widthFactor: 0.95,
+                              child: ElevatedButton(
+                                onPressed: () {check(answers[5]);},
+                                child: Text('${answers[5]}'),
+                              ),
+                            ),
+                          )
+                      ),
+                    ],
+                  ),
+                )
 
-      ],
-      )
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ignore: camel_case_types
+class kopfEndGame extends StatelessWidget {
+  const kopfEndGame({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        home: Scaffold(
+        backgroundColor: Colors.deepPurple,
+        appBar: AppBar(
+        backgroundColor: const Color.fromRGBO(1, 1, 1, 0.0),
+    elevation: 0.0,
+    automaticallyImplyLeading: false,
+    ),
+    body: const Column(
+
+    )
+        )
     );
   }
 }
