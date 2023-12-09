@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'package:ema_app/pages/start.dart';
 
 class KopfMain extends StatelessWidget {
   const KopfMain({super.key});
@@ -8,27 +9,33 @@ class KopfMain extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.deepPurple,
-      appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(49, 49, 49, 1.0),
-        title: const Text("Kopfrechnen"),
-      ),
-      body: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (context) => const KopfInGame(),
-          ));
-        },
-        child: DefaultTextStyle.merge(
-            style: const TextStyle(
-              fontSize: 30,
-            ),
-            child: const Center(
-              child: Text("Drücke auf den Bildschirm um zu Starten!"),
-            )),
-      ),
-    );
+        backgroundColor: Colors.deepPurple,
+        appBar: AppBar(
+          backgroundColor: const Color.fromRGBO(49, 49, 49, 1.0),
+          title: const Text("Kopfrechnen"),
+        ),
+        body: Center(
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (context) => const KopfInGame(),
+              ));
+            },
+            child: Align(
+              alignment: Alignment.center,
+              child: DefaultTextStyle.merge(
+                style: const TextStyle(
+                  fontSize: 30,
+                  color: Colors.white,
+                ),
+                child: const Text("Drücke auf den Bildschirm um zu Starten!"),
+                textAlign: TextAlign.center,
+              ),
+            )
+
+          ),
+        ));
   }
 }
 
@@ -43,13 +50,17 @@ class _KopfInGameState extends State<KopfInGame> {
   int _counter = 60;
   late Timer _timer;
 
-
-
   void startTimer() {
     const oneSecond = Duration(seconds: 1);
     _timer = Timer.periodic(oneSecond, (timer) {
       if (_counter <= 0) {
         timer.cancel();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => kopfEndGame(finalScore: score),
+          ),
+        );
       } else {
         setState(() {
           _counter--;
@@ -67,7 +78,7 @@ class _KopfInGameState extends State<KopfInGame> {
   //Rechenaufgabe
   String _currentTask = "";
   int result = 0;
-  List<int> answers = [1,2,3,4,5,6];
+  List<int> answers = [1, 2, 3, 4, 5, 6];
   var random = Random();
   int score = 0;
 
@@ -78,7 +89,7 @@ class _KopfInGameState extends State<KopfInGame> {
     result = num1 + num2;
   }
 
-  int randomNum(){
+  int randomNum() {
     int randomNumber;
     do {
       randomNumber = 1 + random.nextInt(1000);
@@ -86,16 +97,16 @@ class _KopfInGameState extends State<KopfInGame> {
     return randomNumber;
   }
 
-  void randomAnswers(){
+  void randomAnswers() {
     answers[0] = result;
-    for(int i = 1; i<6; i++){
+    for (int i = 1; i < 6; i++) {
       answers[i] = randomNum();
     }
     answers.shuffle(Random());
   }
 
-  void check(int clickResult){
-    if(clickResult == result){
+  void check(int clickResult) {
+    if (clickResult == result) {
       score++;
       taskBuilder();
       randomAnswers();
@@ -142,7 +153,8 @@ class _KopfInGameState extends State<KopfInGame> {
             ),
             Column(
               children: [
-                Padding(padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -150,7 +162,7 @@ class _KopfInGameState extends State<KopfInGame> {
                         style: const TextStyle(
                           fontSize: 16,
                           color: Colors.white,
-                         ),
+                        ),
                         child: Center(child: Text('Score: $score')),
                       ),
                       DefaultTextStyle.merge(
@@ -163,93 +175,100 @@ class _KopfInGameState extends State<KopfInGame> {
                     ],
                   ),
                 ),
-                Padding(padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
                           child: SizedBox(
-                            height: 100,
-                            child: FractionallySizedBox(
-                              widthFactor: 0.95,
-                              child: ElevatedButton(
-                                onPressed: () {check(answers[0]);},
-                                child: Text('${answers[0]}'),
-                              ),
-                            ),
-                          )
-                      ),
+                        height: 100,
+                        child: FractionallySizedBox(
+                          widthFactor: 0.95,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              check(answers[0]);
+                            },
+                            child: Text('${answers[0]}'),
+                          ),
+                        ),
+                      )),
                       Expanded(
                           child: SizedBox(
-                            height: 100,
-                            child: FractionallySizedBox(
-                              widthFactor: 0.95,
-                              child: ElevatedButton(
-                                onPressed: () {check(answers[1]);},
-                                child: Text('${answers[1]}'),
-                              ),
-                            ),
-                          )
-                      ),
+                        height: 100,
+                        child: FractionallySizedBox(
+                          widthFactor: 0.95,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              check(answers[1]);
+                            },
+                            child: Text('${answers[1]}'),
+                          ),
+                        ),
+                      )),
                       Expanded(
                           child: SizedBox(
-                            height: 100,
-                            child: FractionallySizedBox(
-                              widthFactor: 0.95,
-                              child: ElevatedButton(
-                                onPressed: () {check(answers[2]);},
-                                child: Text('${answers[2]}'),
-                              ),
-                            ),
-                          )
-                      ),
+                        height: 100,
+                        child: FractionallySizedBox(
+                          widthFactor: 0.95,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              check(answers[2]);
+                            },
+                            child: Text('${answers[2]}'),
+                          ),
+                        ),
+                      )),
                     ],
                   ),
                 ),
-                Padding(padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
                           child: SizedBox(
-                            height: 100,
-                            child: FractionallySizedBox(
-                              widthFactor: 0.95,
-                              child: ElevatedButton(
-                                onPressed: () {check(answers[3]);},
-                                child: Text('${answers[3]}'),
-                              ),
-                            ),
-                          )
-                      ),
+                        height: 100,
+                        child: FractionallySizedBox(
+                          widthFactor: 0.95,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              check(answers[3]);
+                            },
+                            child: Text('${answers[3]}'),
+                          ),
+                        ),
+                      )),
                       Expanded(
                           child: SizedBox(
-                            height: 100,
-                            child: FractionallySizedBox(
-                              widthFactor: 0.95,
-                              child: ElevatedButton(
-                                onPressed: () {check(answers[4]);},
-                                child: Text('${answers[4]}'),
-                              ),
-                            ),
-                          )
-                      ),
+                        height: 100,
+                        child: FractionallySizedBox(
+                          widthFactor: 0.95,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              check(answers[4]);
+                            },
+                            child: Text('${answers[4]}'),
+                          ),
+                        ),
+                      )),
                       Expanded(
                           child: SizedBox(
-                            height: 100,
-                            child: FractionallySizedBox(
-                              widthFactor: 0.95,
-                              child: ElevatedButton(
-                                onPressed: () {check(answers[5]);},
-                                child: Text('${answers[5]}'),
-                              ),
-                            ),
-                          )
-                      ),
+                        height: 100,
+                        child: FractionallySizedBox(
+                          widthFactor: 0.95,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              check(answers[5]);
+                            },
+                            child: Text('${answers[5]}'),
+                          ),
+                        ),
+                      )),
                     ],
                   ),
                 )
-
               ],
             ),
           ],
@@ -261,23 +280,55 @@ class _KopfInGameState extends State<KopfInGame> {
 
 // ignore: camel_case_types
 class kopfEndGame extends StatelessWidget {
-  const kopfEndGame({super.key});
+  final int finalScore;
+  const kopfEndGame({super.key, required this.finalScore});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: Scaffold(
+      home: Scaffold(
         backgroundColor: Colors.deepPurple,
         appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(1, 1, 1, 0.0),
-    elevation: 0.0,
-    automaticallyImplyLeading: false,
-    ),
-    body: const Column(
-
-    )
-        )
+          backgroundColor: const Color.fromRGBO(1, 1, 1, 0.0),
+          elevation: 0.0,
+          automaticallyImplyLeading: false,
+        ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            DefaultTextStyle.merge(
+              style: const TextStyle(
+                fontSize: 35,
+                color: Colors.white,
+              ),
+              child: Center(child: Text('Dein Score: $finalScore')),
+            ),
+            DefaultTextStyle.merge(
+              style: const TextStyle(
+                fontSize: 35,
+                color: Colors.white,
+              ),
+              child: const Center(
+                child: Text(
+                  'Der Aktuelle Highscore liegt bei:',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const StartPage(),
+                  ),
+                );
+              },
+              child: const Text("Weiter"),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
-
