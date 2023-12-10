@@ -2,39 +2,41 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:ema_app/pages/start.dart';
+import '../main.dart';
+import 'package:provider/provider.dart';
+
 
 class KopfMain extends StatelessWidget {
   const KopfMain({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final appColors = Provider.of<AppColors>(context);
     return Scaffold(
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: appColors.backgroundColor,
         appBar: AppBar(
           backgroundColor: const Color.fromRGBO(49, 49, 49, 1.0),
           title: const Text("Kopfrechnen"),
         ),
         body: Center(
           child: GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () {
-              Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => const KopfInGame(),
-              ));
-            },
-            child: Align(
-              alignment: Alignment.center,
-              child: DefaultTextStyle.merge(
-                style: const TextStyle(
-                  fontSize: 30,
-                  color: Colors.white,
+              behavior: HitTestBehavior.opaque,
+              onTap: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => const KopfInGame(),
+                ));
+              },
+              child: Align(
+                alignment: Alignment.center,
+                child: DefaultTextStyle.merge(
+                  style: const TextStyle(
+                    fontSize: 30,
+                    color: Colors.white,
+                  ),
+                  child: const Text("Drücke auf den Bildschirm um zu Starten!"),
+                  textAlign: TextAlign.center,
                 ),
-                child: const Text("Drücke auf den Bildschirm um zu Starten!"),
-                textAlign: TextAlign.center,
-              ),
-            )
-
-          ),
+              )),
         ));
   }
 }
@@ -126,9 +128,10 @@ class _KopfInGameState extends State<KopfInGame> {
 
   @override
   Widget build(BuildContext context) {
+    final appColors = Provider.of<AppColors>(context);
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: appColors.backgroundColor,
         appBar: AppBar(
           backgroundColor: const Color.fromRGBO(1, 1, 1, 0.0),
           elevation: 0.0,
@@ -285,9 +288,10 @@ class kopfEndGame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appColors = Provider.of<AppColors>(context);
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: appColors.backgroundColor,
         appBar: AppBar(
           backgroundColor: const Color.fromRGBO(1, 1, 1, 0.0),
           elevation: 0.0,
@@ -315,17 +319,28 @@ class kopfEndGame extends StatelessWidget {
                 ),
               ),
             ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const StartPage(),
+            Expanded(
+              child: SizedBox.expand(
+                child: FractionallySizedBox(
+                  widthFactor: 0.4,
+                  heightFactor: 0.15,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const StartPage()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                    ),
+                    child: const Text("Weiter"),
                   ),
-                );
-              },
-              child: const Text("Weiter"),
-            ),
+                ),
+              ),
+            )
           ],
         ),
       ),

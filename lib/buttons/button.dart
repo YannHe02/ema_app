@@ -4,20 +4,28 @@ import 'package:ema_app/pages/einstellung.dart';
 import 'package:ema_app/pages/statistik.dart';
 //import 'package:ema_app/pages/start.dart';
 import 'package:ema_app/pages/kopfrechnen.dart';
+import '../main.dart';
+import 'package:provider/provider.dart';
+
 
 class GoToTrainingBtn extends StatelessWidget {
   const GoToTrainingBtn({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(padding: const EdgeInsets.fromLTRB(0, 60, 0, 60),
+    final appColors = Provider.of<AppColors>(context);
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 60, 0, 60),
       child: SizedBox(
         width: 300,
         child: FloatingActionButton.extended(
           foregroundColor: const Color.fromRGBO(0, 0, 0, 1.0),
-          backgroundColor: const Color.fromRGBO(183, 183, 183, 1.0),
+          backgroundColor: appColors.buttonColor,
           elevation: 10,
-          onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => const TrainingPage()));},
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const TrainingPage()));
+          },
           label: const Text("Training"),
         ),
       ),
@@ -30,14 +38,19 @@ class GoToStatistikBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(padding: const EdgeInsets.fromLTRB(0, 60, 0, 60),
+    final appColors = Provider.of<AppColors>(context);
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 60, 0, 60),
       child: SizedBox(
         width: 300,
         child: FloatingActionButton.extended(
           foregroundColor: const Color.fromRGBO(0, 0, 0, 1.0),
-          backgroundColor: const Color.fromRGBO(183, 183, 183, 1.0),
+          backgroundColor: appColors.buttonColor,
           elevation: 10,
-          onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => const StatistikPage()));},
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const StatistikPage()));
+          },
           label: const Text("Statistik"),
         ),
       ),
@@ -50,14 +63,21 @@ class GoToEinstellungenBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(padding: const EdgeInsets.fromLTRB(0, 60, 0, 60),
+    final appColors = Provider.of<AppColors>(context);
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 60, 0, 60),
       child: SizedBox(
         width: 300,
         child: FloatingActionButton.extended(
           foregroundColor: const Color.fromRGBO(0, 0, 0, 1.0),
-          backgroundColor: const Color.fromRGBO(183, 183, 183, 1.0),
+          backgroundColor: appColors.buttonColor,
           elevation: 10,
-          onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => const EinstellungenPage()));},
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const EinstellungenPage()));
+          },
           label: const Text("Einstellungen"),
         ),
       ),
@@ -70,35 +90,49 @@ class GoToKopfrechnen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(padding: const EdgeInsets.fromLTRB(0, 60, 0, 60),
-      child: SizedBox(
-        width: 250,
-        height: 250,
-        child: FloatingActionButton.extended(
-          foregroundColor: const Color.fromRGBO(0, 0, 0, 1.0),
-          backgroundColor: const Color.fromRGBO(183, 183, 183, 1.0),
-          elevation: 10,
-          onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => const KopfMain()));},
-          label: const Text("test"),
-        ),
-      ),
-    );
+    final appColors = Provider.of<AppColors>(context);
+    return Padding(
+        padding: const EdgeInsets.fromLTRB(0, 30, 0, 30),
+        child: SizedBox(
+          width: 250,
+          height: 250,
+          child: FloatingActionButton.extended(
+            foregroundColor: const Color.fromRGBO(0, 0, 0, 1.0),
+            backgroundColor: appColors.buttonColor,
+            elevation: 10,
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const KopfMain()));
+            },
+            label: const Text(
+              "Kopfrechnen",
+              style: TextStyle(
+                fontSize: 25.0,
+              ),
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+          ),
+        ));
   }
 }
-
 
 class GoBackBtn extends StatelessWidget {
   const GoBackBtn({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(padding: const EdgeInsets.fromLTRB(30, 30, 0, 0),
+    final appColors = Provider.of<AppColors>(context);
+    return Padding(
+        padding: const EdgeInsets.fromLTRB(30, 30, 0, 0),
         child: FloatingActionButton(
           foregroundColor: const Color.fromRGBO(0, 0, 0, 1.0),
-          backgroundColor: const Color.fromRGBO(183, 183, 183, 1.0),
-          onPressed: () {Navigator.pop(context);},
+          backgroundColor: appColors.buttonColor,
+          onPressed: () {
+            Navigator.pop(context);
+          },
           child: const Icon(Icons.arrow_back),
-        )
-    );
+        ));
   }
 }
