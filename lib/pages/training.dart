@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:ema_app/buttons/button.dart';
 import '../main.dart';
 import 'package:provider/provider.dart';
+import 'package:ema_app/pages/einstellung.dart';
+
 
 class TrainingPage extends StatefulWidget {
   const TrainingPage({super.key});
@@ -19,6 +21,17 @@ class _TrainingPageState extends State<TrainingPage> {
         appBar: AppBar(
           backgroundColor: const Color.fromRGBO(49, 49, 49, 1.0),
           title: const Text("Training"),
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.settings), // Zahnrad-Icon
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const EinstellungenPage()));
+              },
+            ),
+          ],
         ),
         body: const SafeArea(
           child: SingleChildScrollView(

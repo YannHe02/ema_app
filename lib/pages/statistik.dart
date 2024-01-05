@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 //import 'package:ema_app/buttons/button.dart';
 import '../main.dart';
 import 'package:provider/provider.dart';
+import 'package:ema_app/pages/einstellung.dart';
+
 
 
 class StatistikPage extends StatefulWidget {
@@ -20,6 +22,17 @@ class _StatistikPageState extends State<StatistikPage> {
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(49, 49, 49, 1.0),
         title: const Text("Statistik"),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.settings), // Zahnrad-Icon
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const EinstellungenPage()));
+            },
+          ),
+        ],
       ),
     );
   }

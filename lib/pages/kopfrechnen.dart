@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:ema_app/pages/start.dart';
 import '../main.dart';
 import 'package:provider/provider.dart';
+import 'package:ema_app/pages/einstellung.dart';
 
 
 class KopfMain extends StatelessWidget {
@@ -17,6 +18,17 @@ class KopfMain extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: const Color.fromRGBO(49, 49, 49, 1.0),
           title: const Text("Kopfrechnen"),
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.settings), // Zahnrad-Icon
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const EinstellungenPage()));
+              },
+            ),
+          ],
         ),
         body: Center(
           child: GestureDetector(
@@ -185,43 +197,43 @@ class _KopfInGameState extends State<KopfInGame> {
                     children: [
                       Expanded(
                           child: SizedBox(
-                        height: 100,
-                        child: FractionallySizedBox(
-                          widthFactor: 0.95,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              check(answers[0]);
-                            },
-                            child: Text('${answers[0]}'),
-                          ),
-                        ),
-                      )),
+                            height: 100,
+                            child: FractionallySizedBox(
+                              widthFactor: 0.95,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  check(answers[0]);
+                                },
+                                child: Text('${answers[0]}'),
+                              ),
+                            ),
+                          )),
                       Expanded(
                           child: SizedBox(
-                        height: 100,
-                        child: FractionallySizedBox(
-                          widthFactor: 0.95,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              check(answers[1]);
-                            },
-                            child: Text('${answers[1]}'),
-                          ),
-                        ),
-                      )),
+                            height: 100,
+                            child: FractionallySizedBox(
+                              widthFactor: 0.95,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  check(answers[1]);
+                                },
+                                child: Text('${answers[1]}'),
+                              ),
+                            ),
+                          )),
                       Expanded(
                           child: SizedBox(
-                        height: 100,
-                        child: FractionallySizedBox(
-                          widthFactor: 0.95,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              check(answers[2]);
-                            },
-                            child: Text('${answers[2]}'),
-                          ),
-                        ),
-                      )),
+                            height: 100,
+                            child: FractionallySizedBox(
+                              widthFactor: 0.95,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  check(answers[2]);
+                                },
+                                child: Text('${answers[2]}'),
+                              ),
+                            ),
+                          )),
                     ],
                   ),
                 ),
@@ -232,43 +244,43 @@ class _KopfInGameState extends State<KopfInGame> {
                     children: [
                       Expanded(
                           child: SizedBox(
-                        height: 100,
-                        child: FractionallySizedBox(
-                          widthFactor: 0.95,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              check(answers[3]);
-                            },
-                            child: Text('${answers[3]}'),
-                          ),
-                        ),
-                      )),
+                            height: 100,
+                            child: FractionallySizedBox(
+                              widthFactor: 0.95,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  check(answers[3]);
+                                },
+                                child: Text('${answers[3]}'),
+                              ),
+                            ),
+                          )),
                       Expanded(
                           child: SizedBox(
-                        height: 100,
-                        child: FractionallySizedBox(
-                          widthFactor: 0.95,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              check(answers[4]);
-                            },
-                            child: Text('${answers[4]}'),
-                          ),
-                        ),
-                      )),
+                            height: 100,
+                            child: FractionallySizedBox(
+                              widthFactor: 0.95,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  check(answers[4]);
+                                },
+                                child: Text('${answers[4]}'),
+                              ),
+                            ),
+                          )),
                       Expanded(
                           child: SizedBox(
-                        height: 100,
-                        child: FractionallySizedBox(
-                          widthFactor: 0.95,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              check(answers[5]);
-                            },
-                            child: Text('${answers[5]}'),
-                          ),
-                        ),
-                      )),
+                            height: 100,
+                            child: FractionallySizedBox(
+                              widthFactor: 0.95,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  check(answers[5]);
+                                },
+                                child: Text('${answers[5]}'),
+                              ),
+                            ),
+                          )),
                     ],
                   ),
                 )

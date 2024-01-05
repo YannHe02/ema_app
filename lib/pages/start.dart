@@ -3,6 +3,7 @@ import '../buttons/button.dart';
 import '../main.dart';
 import 'package:provider/provider.dart';
 
+
 class StartPage extends StatefulWidget {
   const StartPage({super.key});
 
