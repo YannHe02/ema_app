@@ -26,7 +26,10 @@ class GoToTrainingBtn extends StatelessWidget {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const TrainingPage()));
           },
-          label: const Text("Training"),
+          label: Text("Training",
+            style: TextStyle(
+                color: appColors.schriftColor1
+            ),),
         ),
       ),
     );
@@ -51,7 +54,10 @@ class GoToStatistikBtn extends StatelessWidget {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const StatistikPage()));
           },
-          label: const Text("Statistik"),
+          label: Text("Statistik",
+            style: TextStyle(
+                color: appColors.schriftColor1
+            ),),
         ),
       ),
     );
@@ -78,7 +84,10 @@ class GoToEinstellungenBtn extends StatelessWidget {
                 MaterialPageRoute(
                     builder: (context) => const EinstellungenPage()));
           },
-          label: const Text("Einstellungen"),
+          label: Text("Einstellungen",
+            style: TextStyle(
+                color: appColors.schriftColor1
+            ),),
         ),
       ),
     );
@@ -104,9 +113,10 @@ class GoToKopfrechnen extends StatelessWidget {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const KopfMain()));
             },
-            label: const Text(
+            label: Text(
               "Kopfrechnen",
               style: TextStyle(
+                color: appColors.schriftColor1,
                 fontSize: 25.0,
               ),
             ),

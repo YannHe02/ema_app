@@ -14,18 +14,23 @@ void main() {
 class AppColors extends ChangeNotifier {
   Color _backgroundColor = Colors.white70;
   Color _buttonColor = Colors.blueAccent;
+  Color _schriftColor1 = Colors.black87;
+
 
   Color get backgroundColor => _backgroundColor;
   Color get buttonColor => _buttonColor;
+  Color get schriftColor1 => _schriftColor1;
 
   void darkMode() {
-    _backgroundColor = Colors.black54;
+    _backgroundColor = Colors.black87;
     _buttonColor = Colors.blue;
+    _schriftColor1 = Colors.white70;
     notifyListeners();
   }
   void brightMode() {
     _backgroundColor = Colors.white70;
     _buttonColor = Colors.blueAccent;
+    _schriftColor1 = Colors.black87;
     notifyListeners();
   }
 }
