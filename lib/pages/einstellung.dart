@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 //import 'package:ema_app/buttons/button.dart';
 import '../main.dart';
 import 'package:provider/provider.dart';
+import '../firebase_options.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+
 
 class EinstellungenPage extends StatefulWidget {
   const EinstellungenPage({super.key});
@@ -87,6 +91,18 @@ class _EinstellungenPageState extends State<EinstellungenPage> {
                       ),
                     ],
                   ),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    try {
+                      UserCredential userCredential = await signInWithGoogle();
+                      if (userCredential.user != null) {
+                      }
+                    } catch (e) {
+                      // Handle the error
+                    }
+                  },
+                  child: const Text('Sign in with Google'),
                 )
               ],
             ),
@@ -95,4 +111,3 @@ class _EinstellungenPageState extends State<EinstellungenPage> {
     );
   }
 }
-

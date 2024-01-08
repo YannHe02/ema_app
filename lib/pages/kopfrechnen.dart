@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:ema_app/pages/einstellung.dart';
 
 
+
 class KopfMain extends StatelessWidget {
   const KopfMain({super.key});
 
@@ -359,3 +360,5 @@ class kopfEndGame extends StatelessWidget {
     );
   }
 }
+
+
